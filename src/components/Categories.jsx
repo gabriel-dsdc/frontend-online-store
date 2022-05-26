@@ -18,7 +18,7 @@ export default class Categories extends React.Component {
   render() {
     const { categories } = this.state;
     return (
-      <div>
+      <u>
         {categories.map((category) => (
           <button
             data-testid="category"
@@ -28,7 +28,7 @@ export default class Categories extends React.Component {
             {category.name}
           </button>
         ))}
-      </div>
+      </u>
     );
   }
 }
