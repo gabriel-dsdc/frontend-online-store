@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Categories from '../components/Categories';
 
 function Home() {
   return (
@@ -9,6 +10,7 @@ function Home() {
         Digite algum termo de pesquisa ou escolha uma categoria.
       </p>
       <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
+      <Categories />
     </div>
   );
 }
