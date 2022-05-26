@@ -9,6 +9,7 @@ export default class Home extends React.Component {
     super();
     this.onInputChange = this.onInputChange.bind(this);
     this.getProducts = this.getProducts.bind(this);
+    this.filterCategory = this.filterCategory.bind(this);
     this.state = {
       searchQuery: '',
       isListEmpty: true,
@@ -28,6 +29,12 @@ export default class Home extends React.Component {
       this.setState({ isListEmpty: false });
     }
     this.setState({ productsList: searchResult.results });
+  }
+
+  filterCategory(event) {
+    const categorySelected = event.target.name;
+    this.setState({ prodCategory: categorySelected });
+    this.getProducts();
   }
 
   render() {
@@ -56,7 +63,7 @@ export default class Home extends React.Component {
           Carrinho
         </Link>
         <br />
-        <Categories />
+        <Categories onCategoryClick={ this.filterCategory } />
         <div>
           {isListEmpty ? <p>Nenhum produto foi encontrado</p> : (
             productsList.map((product) => (
