@@ -1,44 +1,40 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import CartButton from '../components/CartButton';
 import Categories from '../components/Categories';
 import ProductCard from '../components/ProductsCard';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 
 export default class Home extends React.Component {
-  constructor() {
-    super();
-    this.onInputChange = this.onInputChange.bind(this);
-    this.getProducts = this.getProducts.bind(this);
-    this.filterCategory = this.filterCategory.bind(this);
-    this.state = {
-      searchQuery: '',
-      isListEmpty: true,
-      productsList: [],
-      prodCategory: '',
-    };
+  state = {
+    searchQuery: '',
+    isListEmpty: true,
+    productsList: [],
+    prodCategory: '',
+  };
+
+  onInputChange = ({ target }) => {
+    this.setState({ [target.name]: target.value });
   }
 
-  onInputChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  async getProducts() {
+  getProducts = async () => {
     const { searchQuery, prodCategory } = this.state;
     const searchResult = await getProductsFromCategoryAndQuery(prodCategory, searchQuery);
-    if (searchResult.results) {
-      this.setState({ isListEmpty: false });
+    if (searchResult.results.length > 0) {
+      this.setState({ isListEmpty: false, productsList: searchResult.results });
+    } else {
+      this.setState({ isListEmpty: true });
     }
-    this.setState({ productsList: searchResult.results });
   }
 
-  filterCategory(event) {
-    const categorySelected = event.target.name;
-    this.setState({ prodCategory: categorySelected });
-    this.getProducts();
+  filterCategory = ({ target: { name } }) => {
+    const categorySelected = name;
+    this.setState({ prodCategory: categorySelected }, () => this.getProducts());
   }
 
   render() {
     const { searchQuery, isListEmpty, productsList } = this.state;
+    const { addToCart } = this.props;
     return (
       <div>
         <h1>Home</h1>
@@ -59,42 +55,30 @@ export default class Home extends React.Component {
           Buscar
         </button>
         <br />
-        <Link data-testid="shopping-cart-button" to="/cart">
-          Carrinho
-        </Link>
+        <CartButton />
         <br />
         <Categories onCategoryClick={ this.filterCategory } />
         <div>
-          {isListEmpty ? <p>Nenhum produto foi encontrado</p> : (
+          {isListEmpty ? (
+            <p>Nenhum produto foi encontrado</p>
+          ) : (
             productsList.map((product) => (
               <ProductCard
                 key={ product.id }
+                id={ product.id }
                 name={ product.title }
                 img={ product.thumbnail }
                 price={ product.price }
+                addToCart={ addToCart }
               />
-            )))}
+            ))
+          )}
         </div>
       </div>
     );
   }
 }
 
-/* function Home() {
-  return (
-    <div>
-      <h1>Home</h1>
-      <p data-testid="home-initial-message">
-        Digite algum termo de pesquisa ou escolha uma categoria.
-      </p>
-      <input data-testid="query-input" />
-      <button type="button" data-testid="query-button">Buscar</button>
-      <br />
-      <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
-      <Categories />
-    </div>
-  );
-}
-
-export default Home;
- */
+Home.propTypes = {
+  addToCart: PropTypes.func.isRequired,
+};
