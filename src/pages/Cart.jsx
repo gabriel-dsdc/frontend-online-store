@@ -32,11 +32,12 @@ export default class Cart extends React.Component {
               <div key={ id }>
                 <p data-testid="shopping-cart-product-name">{name}</p>
                 <p data-testid="shopping-cart-product-quantity">
-                  {`Quantidade: ${actualAmount > 0 ? actualAmount : quantity}`}
+                  {`Quantidade:${actualAmount > 0 ? actualAmount : quantity}`}
                 </p>
                 <Amount id={ id } price={ price } callback={ this.handleCallback } />
               </div>
             ))}
+            <Link data-testid="checkout-products" to="/checkout">Finalizar</Link>
           </>
         ) : (
           <p data-testid="shopping-cart-empty-message">
