@@ -2,6 +2,8 @@ import React from 'react';
 import propTypes from 'prop-types';
 import { getProduct } from '../services/api';
 import CartButton from '../components/CartButton';
+import Amount from '../components/Amount';
+import Evaluation from '../components/Evaluation';
 
 class Product extends React.Component {
   state = {
@@ -43,6 +45,7 @@ class Product extends React.Component {
             </ul>
           </div>
         </div>
+        <Amount id={ matchId } price={ price } />
         <button
           data-testid="product-detail-add-to-cart"
           type="button"
@@ -53,6 +56,7 @@ class Product extends React.Component {
         >
           Adicionar ao Carrinho
         </button>
+        <Evaluation id={ matchId } />
       </div>
     );
   }

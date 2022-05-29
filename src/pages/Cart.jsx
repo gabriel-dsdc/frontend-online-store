@@ -1,10 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Amount from '../components/Amount';
 
 export default class Cart extends React.Component {
+  state = {
+    actualAmount: 1,
+  }
+
+  handleCallback = (amount, id) => {
+    const { cartItems } = this.props;
+    const products = cartItems.find((product) => product.id === id);
+    products.quantity = amount;
+    this.setState({ actualAmount: products.quantity > 0
+      ? products.quantity
+      : 1 });
+  };
+
   render() {
     const { cartItems } = this.props;
+    const { actualAmount } = this.state;
     return (
       <div>
         <Link to="/">Home</Link>
@@ -17,9 +32,9 @@ export default class Cart extends React.Component {
               <div key={ id }>
                 <p data-testid="shopping-cart-product-name">{name}</p>
                 <p data-testid="shopping-cart-product-quantity">
-                  {`Quantidade: ${quantity}`}
+                  {`Quantidade: ${actualAmount > 0 ? actualAmount : quantity}`}
                 </p>
-                <p>{`Preço: R$ ${price}`}</p>
+                <Amount id={ id } price={ price } callback={ this.handleCallback } />
               </div>
             ))}
           </>
