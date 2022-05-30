@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Product from './pages/Product';
 import { addItem, getCartItems } from './services/api';
+import Checkout from './pages/Checkout';
 
 class App extends React.Component {
   state = {
@@ -34,6 +35,7 @@ class App extends React.Component {
             render={ (routerProps) => (
               <Product { ...routerProps } addToCart={ this.addToCart } />) }
           />
+          <Route path="/checkout" component={ Checkout } />
         </BrowserRouter>
       </div>
     );
