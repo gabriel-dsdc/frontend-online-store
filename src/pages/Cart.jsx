@@ -18,8 +18,6 @@ export default class Cart extends React.Component {
 
   render() {
     const { cartItems } = this.props;
-    const { actualAmount } = this.state;
-    console.log(actualAmount);
     return (
       <div>
         <Link to="/">Home</Link>

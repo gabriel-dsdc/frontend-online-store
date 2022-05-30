@@ -12,6 +12,13 @@ class App extends React.Component {
     cartItems: [],
   };
 
+  componentDidMount() {
+    this.setState({
+      cartItems: JSON.parse(localStorage.getItem('cart_items'))
+        ? JSON.parse(localStorage.getItem('cart_items')) : [],
+    });
+  }
+
   addToCart = (event) => {
     addItem(event);
     this.setState({ cartItems: getCartItems() });
