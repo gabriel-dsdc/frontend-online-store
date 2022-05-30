@@ -8,18 +8,18 @@ export default class Cart extends React.Component {
     actualAmount: 1,
   }
 
-  handleCallback = (amount, id) => {
+  handleCallback = (id, index) => {
     const { cartItems } = this.props;
+    const { actualAmount } = this.state;
     const products = cartItems.find((product) => product.id === id);
-    products.quantity = amount;
-    this.setState({ actualAmount: products.quantity > 0
-      ? products.quantity
-      : 1 });
+    products.quantity += index;
+    this.setState({ actualAmount: actualAmount < 1 ? 1 : products.quantity });
   };
 
   render() {
     const { cartItems } = this.props;
     const { actualAmount } = this.state;
+    console.log(actualAmount);
     return (
       <div>
         <Link to="/">Home</Link>
@@ -32,9 +32,14 @@ export default class Cart extends React.Component {
               <div key={ id }>
                 <p data-testid="shopping-cart-product-name">{name}</p>
                 <p data-testid="shopping-cart-product-quantity">
-                  {`Quantidade:${actualAmount > 0 ? actualAmount : quantity}`}
+                  { quantity }
                 </p>
-                <Amount id={ id } price={ price } callback={ this.handleCallback } />
+                <Amount
+                  id={ id }
+                  price={ price }
+                  callback={ this.handleCallback }
+                  disable={ quantity }
+                />
               </div>
             ))}
             <Link data-testid="checkout-products" to="/checkout">Finalizar</Link>

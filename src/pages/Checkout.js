@@ -46,7 +46,7 @@ class Checkout extends React.Component {
           </label>
           <br />
           <label htmlFor="cepInput">
-            CPF:
+            CEP:
             <input
               data-testid="checkout-cep"
               type="text"
