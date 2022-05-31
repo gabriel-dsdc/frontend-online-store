@@ -21,7 +21,7 @@ export const getProduct = (productId) => (
 
 export const getCartItems = () => JSON.parse(localStorage.getItem('cart_items')) || [];
 
-export const addItem = ({ target: { id, dataset: { name, price } } }) => {
+export const addItem = ({ target: { id, dataset: { name, price, stock } } }) => {
   const prevItems = getCartItems();
   const foundEqual = prevItems.find((item) => (id === item.id)) || {};
   const invalidIndex = -1;
@@ -30,7 +30,12 @@ export const addItem = ({ target: { id, dataset: { name, price } } }) => {
     const newItem = JSON.stringify([...prevItems]);
     localStorage.setItem('cart_items', newItem);
   } else {
-    const newItem = JSON.stringify([...prevItems, { id, name, price, quantity: 1 }]);
+    const newItem = JSON.stringify([...prevItems, {
+      id,
+      name,
+      price,
+      quantity: 1,
+      stock: Number(stock) }]);
     localStorage.setItem('cart_items', newItem);
   }
 };

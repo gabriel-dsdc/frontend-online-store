@@ -37,14 +37,14 @@ class Amount extends React.Component {
 
   render() {
     const { priceActual } = this.state;
-    const { price, disable } = this.props;
+    const { price, qtdMin, qtdMax } = this.props;
     return (
       <div>
         <button
           type="button"
           onClick={ this.buttonDown }
           data-testid="product-decrease-quantity"
-          disabled={ disable <= 1 }
+          disabled={ qtdMin <= 1 }
         >
           -
         </button>
@@ -52,6 +52,7 @@ class Amount extends React.Component {
           type="button"
           onClick={ this.buttonUp }
           data-testid="product-increase-quantity"
+          disabled={ qtdMin >= qtdMax }
         >
           +
         </button>
@@ -67,7 +68,8 @@ Amount.propTypes = {
   id: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   callback: PropTypes.func.isRequired,
-  disable: PropTypes.number.isRequired,
+  qtdMin: PropTypes.number.isRequired,
+  qtdMax: PropTypes.number.isRequired,
 };
 
 export default Amount;

@@ -8,6 +8,7 @@ class Product extends React.Component {
   state = {
     productDetails: {
       attributes: [],
+      shipping: {},
     },
   }
 
@@ -17,7 +18,12 @@ class Product extends React.Component {
   }
 
   render() {
-    const { productDetails: { title, price, thumbnail, attributes } } = this.state;
+    const {
+      productDetails:
+      { title, price, thumbnail, attributes, availableQuantity,
+        shipping: {
+          free_shipping: freeShipping } },
+    } = this.state;
     const { match: { params: { id: matchId } }, addToCart } = this.props;
     return (
       <div>
@@ -28,7 +34,7 @@ class Product extends React.Component {
               <strong data-testid="product-detail-name">
                 {`${title} - R$ ${price}`}
               </strong>
-
+              {freeShipping && <span data-testid="free-shipping">Frete Grátis</span>}
             </p>
             <img src={ thumbnail } alt={ title } />
           </div>
@@ -50,6 +56,7 @@ class Product extends React.Component {
           id={ matchId }
           data-name={ title }
           data-price={ price }
+          data-stock={ availableQuantity }
           onClick={ addToCart }
         >
           Adicionar ao Carrinho

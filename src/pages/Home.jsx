@@ -69,7 +69,9 @@ export default class Home extends React.Component {
                 name={ product.title }
                 img={ product.thumbnail }
                 price={ product.price }
+                stock={ product.available_quantity }
                 addToCart={ addToCart }
+                shipping={ product.shipping }
               />
             ))
           )}

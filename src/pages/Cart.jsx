@@ -26,7 +26,7 @@ export default class Cart extends React.Component {
         </h1>
         {cartItems.length > 0 ? (
           <>
-            {cartItems.map(({ id, name, price, quantity }) => (
+            {cartItems.map(({ id, name, price, quantity, stock }) => (
               <div key={ id }>
                 <p data-testid="shopping-cart-product-name">{name}</p>
                 <p data-testid="shopping-cart-product-quantity">
@@ -35,8 +35,9 @@ export default class Cart extends React.Component {
                 <Amount
                   id={ id }
                   price={ price }
+                  qtdMin={ quantity }
+                  qtdMax={ stock }
                   callback={ this.handleCallback }
-                  disable={ quantity }
                 />
               </div>
             ))}
