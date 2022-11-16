@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Amount from '../components/Amount';
 
@@ -34,7 +34,7 @@ export default class Cart extends React.Component {
                 </p>
                 <Amount
                   id={ id }
-                  price={ price }
+                  price={ Number(price) }
                   qtdMin={ quantity }
                   qtdMax={ stock }
                   callback={ this.handleCallback }

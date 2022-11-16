@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { getProduct } from '../services/api';
 
 class Amount extends React.Component {
@@ -64,12 +64,16 @@ class Amount extends React.Component {
   }
 }
 
+Amount.defaultProps = {
+  qtdMax: null,
+};
+
 Amount.propTypes = {
   id: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   callback: PropTypes.func.isRequired,
   qtdMin: PropTypes.number.isRequired,
-  qtdMax: PropTypes.number.isRequired,
+  qtdMax: PropTypes.number,
 };
 
 export default Amount;
